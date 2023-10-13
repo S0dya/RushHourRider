@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Road
-  m_Shader: {fileID: -6465566751694194690, guid: 7a9e87728f501f9418d408c930bf215d,
+  m_Name: Shader
+  m_Shader: {fileID: -6465566751694194690, guid: 90bb397df0310534f927c5b4a7b702b8,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -110,7 +110,7 @@ Material:
     - _UVSec: 1
     - _ZWrite: 1
     m_Colors:
-    - _Albedo: {r: 0.2264151, g: 0, b: 0, a: 0}
+    - _Albedo: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Offset: {r: 0.75, g: 0, b: 0, a: 0}
