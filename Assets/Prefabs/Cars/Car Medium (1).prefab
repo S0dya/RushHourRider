@@ -61,8 +61,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1637880222114644024, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
-  - {fileID: 8975480819012031255, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
+  - {fileID: 2100000, guid: dbbaf2d49b517a44ba600e1e46207157, type: 2}
+  - {fileID: 2100000, guid: 025298d2c82a9cd4f97489ce6da76b49, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -145,8 +145,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8705533452240791338, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
-  - {fileID: 8975480819012031255, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
+  - {fileID: 2100000, guid: dbbaf2d49b517a44ba600e1e46207157, type: 2}
+  - {fileID: 2100000, guid: e6a8ae17b6f4d644cbde8a3f32c96a3b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -229,8 +229,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1637880222114644024, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
-  - {fileID: 8975480819012031255, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
+  - {fileID: 2100000, guid: dbbaf2d49b517a44ba600e1e46207157, type: 2}
+  - {fileID: 2100000, guid: 025298d2c82a9cd4f97489ce6da76b49, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -313,8 +313,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8975480819012031255, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
-  - {fileID: -8705533452240791338, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
+  - {fileID: 2100000, guid: e6a8ae17b6f4d644cbde8a3f32c96a3b, type: 2}
+  - {fileID: 2100000, guid: dbbaf2d49b517a44ba600e1e46207157, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -436,8 +436,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1637880222114644024, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
-  - {fileID: 9101280890363022628, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
+  - {fileID: 2100000, guid: dbbaf2d49b517a44ba600e1e46207157, type: 2}
+  - {fileID: 2100000, guid: 025298d2c82a9cd4f97489ce6da76b49, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -522,9 +522,9 @@ MeshRenderer:
   m_Materials:
   - {fileID: -8767902653634382960, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
   - {fileID: 8964088591131456171, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
-  - {fileID: 8975480819012031255, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
-  - {fileID: -8705533452240791338, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
-  - {fileID: -1637880222114644024, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
+  - {fileID: 2100000, guid: e6a8ae17b6f4d644cbde8a3f32c96a3b, type: 2}
+  - {fileID: 2100000, guid: dbbaf2d49b517a44ba600e1e46207157, type: 2}
+  - {fileID: 2100000, guid: dbbaf2d49b517a44ba600e1e46207157, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -607,8 +607,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8705533452240791338, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
-  - {fileID: 8975480819012031255, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
+  - {fileID: 2100000, guid: dbbaf2d49b517a44ba600e1e46207157, type: 2}
+  - {fileID: 2100000, guid: e6a8ae17b6f4d644cbde8a3f32c96a3b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -691,8 +691,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8975480819012031255, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
-  - {fileID: -8705533452240791338, guid: 569c3a50a2b7a12478996d8df6989fa4, type: 3}
+  - {fileID: 2100000, guid: e6a8ae17b6f4d644cbde8a3f32c96a3b, type: 2}
+  - {fileID: 2100000, guid: dbbaf2d49b517a44ba600e1e46207157, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

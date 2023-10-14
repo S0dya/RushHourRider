@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        movementVelocity = transform.forward * speed * Time.deltaTime;
+        movementVelocity = transform.forward * speed;
         rb.velocity = movementVelocity;
     }
 

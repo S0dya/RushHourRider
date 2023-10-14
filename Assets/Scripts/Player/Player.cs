@@ -17,10 +17,9 @@ public class Player : SingletonMonobehaviour<Player>
     //local
     Vector2 touchStartPos;
     Vector3 inputDirection;
-
     Vector3 movementVelocity;
 
-    Coroutine movementInputCor;
+    bool isInput;
 
     protected override void Awake()
     {
@@ -46,28 +45,7 @@ public class Player : SingletonMonobehaviour<Player>
 
     void Update()
     {
-        movementVelocity = (transform.forward + inputDirection) * movementSpeed * Time.deltaTime;
-        rb.velocity = movementVelocity;
-    }
-
-    
-
-    //input
-    void StartTouch(InputAction.CallbackContext context)
-    {
-        touchStartPos = context.ReadValue<Vector2>();
-        movementInputCor = StartCoroutine(MovementInputCor());
-    }
-    
-    void EndTouch(InputAction.CallbackContext context)
-    {
-        if (movementInputCor != null) StopCoroutine(movementInputCor);
-        inputDirection = Vector2.zero;
-    }
-    
-    IEnumerator MovementInputCor()
-    {
-        while (true)
+        if (isInput)
         {
             if (Input.touchCount > 0)
             {
@@ -82,16 +60,30 @@ public class Player : SingletonMonobehaviour<Player>
             }
             else
             {
-                break;
+                inputDirection = Vector2.zero;
             }
-
-            yield return null;  
         }
 
-        inputDirection = Vector2.zero; //delater
+        movementVelocity = (transform.forward + inputDirection) * movementSpeed;
+        rb.velocity = movementVelocity;
     }
 
+    
 
+    //input
+    void StartTouch(InputAction.CallbackContext context)
+    {
+        touchStartPos = context.ReadValue<Vector2>();
+        isInput = true;
+    }
+
+    void EndTouch(InputAction.CallbackContext context)
+    {
+        isInput = false;
+        touchStartPos = Vector2.zero;
+    }
+
+    //triger
     void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Obstacle"))
