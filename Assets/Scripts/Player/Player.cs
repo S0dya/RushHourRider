@@ -58,10 +58,6 @@ public class Player : SingletonMonobehaviour<Player>
                 Vector2 delta = (Vector2)Input.mousePosition - touchStartPos;
                 inputDirection = new Vector3(delta.x * sensitivity, 0, 0);
             }
-            else
-            {
-                inputDirection = Vector2.zero;
-            }
         }
 
         movementVelocity = (transform.forward + inputDirection) * movementSpeed;

@@ -1,5 +1,42 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &61552332907094541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3623370333173190295}
+  m_Layer: 0
+  m_Name: Car
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3623370333173190295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61552332907094541}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8617270754300025060}
+  - {fileID: 8617270754554188598}
+  - {fileID: 8617270754182497065}
+  - {fileID: 8617270753365983095}
+  - {fileID: 8617270753896055229}
+  - {fileID: 8617270754158549919}
+  m_Father: {fileID: 8617270753964884691}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &8617270753365983092
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,7 +67,7 @@ Transform:
   m_LocalScale: {x: 28.99153, y: 28.99153, z: 28.99153}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8617270753964884691}
+  m_Father: {fileID: 3623370333173190295}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8617270753365983089
@@ -114,7 +151,7 @@ Transform:
   m_LocalScale: {x: 28.99153, y: 28.99153, z: 28.99153}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8617270753964884691}
+  m_Father: {fileID: 3623370333173190295}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8617270753896055231
@@ -177,6 +214,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8617270753964884691}
+  - component: {fileID: 5046717365708540298}
+  - component: {fileID: 774127662977047114}
+  - component: {fileID: 8327599003235439454}
   m_Layer: 0
   m_Name: Car Fast
   m_TagString: Untagged
@@ -196,15 +236,53 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8617270754300025060}
-  - {fileID: 8617270754554188598}
-  - {fileID: 8617270754182497065}
-  - {fileID: 8617270753365983095}
-  - {fileID: 8617270753896055229}
-  - {fileID: 8617270754158549919}
+  - {fileID: 3623370333173190295}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5046717365708540298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8617270753964884688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a95a82fe067b9042b1af63c9ac22682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  rb: {fileID: 774127662977047114}
+--- !u!54 &774127662977047114
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8617270753964884688}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &8327599003235439454
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8617270753964884688}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.45, y: 1, z: 3.8101208}
+  m_Center: {x: 0, y: 0.75, z: -0.15506041}
 --- !u!1 &8617270754158549916
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +313,7 @@ Transform:
   m_LocalScale: {x: 28.99153, y: 28.99153, z: 28.99153}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8617270753964884691}
+  m_Father: {fileID: 3623370333173190295}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8617270754158549913
@@ -319,7 +397,7 @@ Transform:
   m_LocalScale: {x: 123.99866, y: 123.99866, z: 123.99866}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8617270753964884691}
+  m_Father: {fileID: 3623370333173190295}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8617270754182497067
@@ -403,7 +481,7 @@ Transform:
   m_LocalScale: {x: 123.99866, y: 123.99866, z: 123.99866}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8617270753964884691}
+  m_Father: {fileID: 3623370333173190295}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8617270754300025062
@@ -488,7 +566,7 @@ Transform:
   m_LocalScale: {x: 123.99866, y: 123.99866, z: 123.99866}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8617270753964884691}
+  m_Father: {fileID: 3623370333173190295}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8617270754554188592
