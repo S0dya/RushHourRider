@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class LevelTriigger : MonoBehaviour
 {
-    
+    [SerializeField] GameObject level;
+
     void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             LevelManager.I.CreateNewLevel();
-            Destroy(gameObject);
+            Destroy(level);
         }
     }
 }
