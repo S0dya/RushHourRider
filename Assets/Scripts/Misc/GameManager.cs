@@ -18,33 +18,19 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         LTDescr tween = LeanTween.alphaCanvas(CG, 1, duration).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => OpenCompletely(CG));
         tween.setUseEstimatedTime(true);
-    }
-    void OpenCompletely(CanvasGroup CG)
-    {
-        CG.blocksRaycasts = true;
-    }
+    } 
+    void OpenCompletely(CanvasGroup CG) => CG.blocksRaycasts = true;
+    
     public void Close(CanvasGroup CG, float duration)
     {
         LTDescr tween = LeanTween.alphaCanvas(CG, 0, duration).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => CloseComletely(CG));
         tween.setUseEstimatedTime(true);
     }
-    void CloseComletely(CanvasGroup CG)
-    {
-        CG.blocksRaycasts = false;
-    }
+    void CloseComletely(CanvasGroup CG) => CG.blocksRaycasts = false;
 
-    public void FadeIn(CanvasGroup CG, float durationStart)
-    {
-        LeanTween.alphaCanvas(CG, 1f, durationStart).setEase(LeanTweenType.easeInOutQuad);
-    }
-    public void FadeInAndOut(CanvasGroup CG, float durationStart, float durationEnd)
-    {
-        LeanTween.alphaCanvas(CG, 1f, durationStart).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => FadeOut(CG, durationEnd));
-    }
-    public void FadeOut(CanvasGroup CG, float durationEnd)
-    {
-        LeanTween.alphaCanvas(CG, 0f, durationEnd).setEase(LeanTweenType.easeInOutQuad);
-    }
+    public void FadeIn(CanvasGroup CG, float durationStart) => LeanTween.alphaCanvas(CG, 1f, durationStart).setEase(LeanTweenType.easeInOutQuad);
+    public void FadeInAndOut(CanvasGroup CG, float durationStart, float durationEnd) => LeanTween.alphaCanvas(CG, 1f, durationStart).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => FadeOut(CG, durationEnd));
+    public void FadeOut(CanvasGroup CG, float durationEnd) => LeanTween.alphaCanvas(CG, 0f, durationEnd).setEase(LeanTweenType.easeInOutQuad);
 
     //save/load
     void OnApplicationPause(bool pauseStatus)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelTriigger : MonoBehaviour
+public class LevelTrigger : MonoBehaviour
 {
     [SerializeField] GameObject level;
 
