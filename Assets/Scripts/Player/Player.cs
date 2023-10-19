@@ -114,7 +114,14 @@ public class Player : SingletonMonobehaviour<Player>
         while (true)
         {
             yield return new WaitForSeconds(movementSpeed * 1.2f);
-            movementSpeed++;
+            float newSpeed = movementSpeed + 1;
+            while (movementSpeed < newSpeed)
+            {
+                //smoothly increase speed of player
+                movementSpeed = Mathf.Lerp(movementSpeed, 13, 0.005f);
+
+                yield return null;
+            }
         }
     }
 

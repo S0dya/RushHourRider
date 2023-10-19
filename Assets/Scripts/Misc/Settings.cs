@@ -6,8 +6,8 @@ public static class Settings
 {
 
     //game
-    
 
 
+    public static bool isMusicOn;
 
 }

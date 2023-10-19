@@ -889,6 +889,7 @@ PlayerSettings:
   vrEditorSettings: {}
   cloudServicesEnabled:
     UNet: 1
+    Unity Ads: 1
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -903,11 +904,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: 19954bc4-cbaa-4a6d-8ff6-721a15e4e040
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Rush Hour Driver
+  organizationId: pepsik21
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
