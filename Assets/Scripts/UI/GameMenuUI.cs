@@ -6,8 +6,12 @@ using TMPro;
 
 public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
 {
+    GameManager gameManager;
+
+    [SerializeField] Player player;
     [SerializeField] CanvasGroup gameMenuCG;
     [SerializeField] CanvasGroup gameoverCG;
+    [SerializeField] CanvasGroup countCG;
 
     [SerializeField] Image musicImage;
     [SerializeField] Image AdsImage;
@@ -15,14 +19,31 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
     [SerializeField] TextMeshProUGUI gameoverScoreText;
     [SerializeField] TextMeshProUGUI scoreText;
 
+    [SerializeField] RectTransform scoreAddParent;
+    [SerializeField] GameObject scoreAddPrefab;
+
+    [SerializeField] GameObject countTextObj;
+    TextMeshProUGUI countText;
+    CanvasGroup countTextCG;
+
     [SerializeField] CanvasGroup[] boostCGs;
 
     public int score;
+    public int scoreMultiplier;
+
+    public int maxCounting;
+    //local 
+    int curCount;
+
 
     protected override void Awake()
     {
         base.Awake();
 
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+
+        countText = countTextObj.GetComponent<TextMeshProUGUI>();
+        countTextCG = countTextObj.GetComponent<CanvasGroup>();
     }
 
     void Start()
@@ -34,15 +55,17 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
     //buttons
     public void PauseButton()
     {
-        Player.I.isMenuOpened = true;
+        player.isMenuOpened = true;
         Time.timeScale = 0f;
         ToggleGameMenu(true);
     }
     public void ResumeButton()
     {
         ToggleGameMenu(false);
-        Time.timeScale = Settings.currentTimeScale;
-        Player.I.isMenuOpened = false;
+        gameManager.Open(countCG, 0.2f);
+
+        curCount = maxCounting;
+        Counting();
     }
     public void HomeButton()
     {
@@ -67,16 +90,22 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
 
 
     //methods
-    void ChangeScore(int val)
+    public void AddScore(int val)
     {
+        val *= scoreMultiplier;
+        GameObject textObj = Instantiate(scoreAddPrefab, scoreAddParent);
+        var text = textObj.GetComponent<TextMeshProUGUI>();
+        text.text = $"+{val}";
+        gameManager.FadeInAndOutAndDestroy(textObj, 1, 0.2f);
+
         score += val;
         SetScoreText(scoreText);
     }
 
     public void ToggleGameMenu(bool val)
     {
-        if (val) GameManager.I.Open(gameMenuCG, 0.1f);
-        else GameManager.I.Close(gameMenuCG, 0.5f);
+        if (val) gameManager.Open(gameMenuCG, 0.1f);
+        else gameManager.Close(gameMenuCG, 0.5f);
 
         //StartCoroutine();
     }
@@ -84,7 +113,7 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
     public void Gameover()
     {
         SetScoreText(gameoverScoreText);
-        GameManager.I.Open(gameoverCG, 0);
+        gameManager.Open(gameoverCG, 0);
     }
 
     public void RewardPlayer()
@@ -97,13 +126,35 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
 
     void CountScore()
     {
-        Settings.money = score / 5;
+        Settings.money = score/5;
     }
 
     public void ToggleBoost(int i, bool val)
     {
-        if (val) GameManager.I.FadeIn(boostCGs[i], 0.3f);
-        else GameManager.I.FadeOut(boostCGs[i], 0);
+        if (val) gameManager.FadeIn(boostCGs[i], 0.3f);
+        else gameManager.FadeOut(boostCGs[i], 0);
+    }
+
+    public void Counting()
+    {
+        countText.text = curCount.ToString();
+        FadeInAndOut(countTextCG, 0.8f, 1.4f);
+    }
+    void FadeInAndOut(CanvasGroup CG, float durationStart, float durationEnd) => LeanTween.alphaCanvas(CG, 1f, durationStart).setEase(LeanTweenType.easeInOutQuad).setIgnoreTimeScale(true).setOnComplete(() => FadeOutCounting(CG, durationEnd));
+    void FadeOutCounting(CanvasGroup CG, float durationEnd)
+    {
+        LeanTween.alphaCanvas(CG, 0f, durationEnd).setEase(LeanTweenType.easeInOutQuad).setIgnoreTimeScale(true);
+        if (curCount != 1)
+        {
+            curCount--;
+            Counting();
+        }
+        else
+        {
+            Time.timeScale = Settings.currentTimeScale;
+            player.isMenuOpened = false;
+            gameManager.Close(countCG, 0f);
+        }
     }
 
     void SetScoreText(TextMeshProUGUI text) => text.text = score.ToString();

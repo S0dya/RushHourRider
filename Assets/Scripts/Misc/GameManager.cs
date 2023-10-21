@@ -32,6 +32,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public void FadeInAndOut(CanvasGroup CG, float durationStart, float durationEnd) => LeanTween.alphaCanvas(CG, 1f, durationStart).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => FadeOut(CG, durationEnd));
     public void FadeOut(CanvasGroup CG, float durationEnd) => LeanTween.alphaCanvas(CG, 0f, durationEnd).setEase(LeanTweenType.easeInOutQuad);
 
+    public void FadeInAndOutAndDestroy(GameObject gO, float durationStart, float durationEnd)
+    {
+        CanvasGroup CG = gO.GetComponent<CanvasGroup>();
+        LeanTween.alphaCanvas(CG, 1f, durationStart).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => FadeOutAndDestroy(gO, CG, durationEnd));
+    }
+    public void FadeOutAndDestroy(GameObject gO, CanvasGroup CG, float durationEnd)
+    {
+        LeanTween.alphaCanvas(CG, 0f, durationEnd).setEase(LeanTweenType.easeInOutQuad);
+        Destroy(gO);
+    }
+
     //save/load
     void OnApplicationPause(bool pauseStatus)
     {

@@ -23,6 +23,7 @@ public class Player : SingletonMonobehaviour<Player>
     [Header("SerializeFields")]
     [SerializeField] Transform bikeTransform;
     [SerializeField] Transform playerCameraTransform;
+    [SerializeField] GameMenuUI gameMenu;
 
     //local
     float touchStartPos;
@@ -40,6 +41,7 @@ public class Player : SingletonMonobehaviour<Player>
     Coroutine boostSpeedStopCor;
     Coroutine slowTimeCor;
     Coroutine slowTimeStopCor;
+    Coroutine scoreMultiplierCor;
 
     protected override void Awake()
     {
@@ -122,12 +124,12 @@ public class Player : SingletonMonobehaviour<Player>
             while (movementSpeed < newSpeed)
             {
                 //smoothly increase speed of player
-                movementSpeed = Mathf.Lerp(movementSpeed, 13, 0.005f);
+                movementSpeed = Mathf.Lerp(movementSpeed, newSpeed+0.5f, 0.005f);
 
                 yield return null;
             }
 
-            yield return new WaitForSeconds(movementSpeed * 1.2f);
+            yield return new WaitForSeconds(movementSpeed * 0.15f);
         }
     }
 
@@ -136,7 +138,7 @@ public class Player : SingletonMonobehaviour<Player>
     IEnumerator BoostSpeedCor()
     {
         //show icon of boost
-        GameMenuUI.I.ToggleBoost(0, true);
+        gameMenu.ToggleBoost(0, true);
         //increase additional speed smoothly 
         while (additionalSpeed < maxAdditionalSpeed)
         {
@@ -165,13 +167,13 @@ public class Player : SingletonMonobehaviour<Player>
             yield return null;
         }
 
-        GameMenuUI.I.ToggleBoost(0, false);
+        gameMenu.ToggleBoost(0, false);
         boostSpeedStopCor = null;
     }
 
     IEnumerator SlowTimeCor()
     {
-        GameMenuUI.I.ToggleBoost(2, true);
+        gameMenu.ToggleBoost(2, true);
         while (Settings.currentTimeScale > 0.5f)
         {
             //check if menu is opened (time scale would change if i dont use this kind of logic)
@@ -193,34 +195,41 @@ public class Player : SingletonMonobehaviour<Player>
             yield return null;
         }
 
-        GameMenuUI.I.ToggleBoost(2, false);
+        gameMenu.ToggleBoost(2, false);
         slowTimeStopCor = null;
+    }
+
+    IEnumerator ScoreMultiplierCor()
+    {
+        gameMenu.scoreMultiplier = 2;
+        yield return new WaitForSeconds(10);
+        gameMenu.scoreMultiplier = 1;
+        gameMenu.ToggleBoost(3, false);
+        scoreMultiplierCor = null;
     }
 
 
     //triger
     void OnTriggerEnter(Collider collision)
     {
-        string tag = collision.tag;
-        if (tag == "Obstacle" || tag == "Enemy")
+        switch (collision.tag)
         {
-            if (hasShield)
-            {
-                //shield breaks, we just need to remove the icon
-                hasShield = false;
-                GameMenuUI.I.ToggleBoost(1, false);
-                Destroy(collision.gameObject);
-            }
-            else
-            {
-                //GameMenuUI.I.Gameover();
-                Debug.Log("Die");
-            }
-        }
-        else if (collision.gameObject.layer == 8)
-        {
-            if (tag == "Boost")
-            {
+            case "Obstacle":
+            case "Enemy":
+                if (hasShield)
+                {
+                    //shield breaks, we just need to remove the icon
+                    hasShield = false;
+                    gameMenu.ToggleBoost(1, false);
+                    Destroy(collision.gameObject);
+                }
+                else
+                {
+                    //gameMenu.Gameover();
+                    Debug.Log("Die");
+                }
+                break;
+            case "Boost":
                 //add additional speed as a response for taking a boost if boost is already being used
                 if (boostSpeedCor != null)
                 {
@@ -232,23 +241,27 @@ public class Player : SingletonMonobehaviour<Player>
                     if (boostSpeedStopCor != null) StopCoroutine(boostSpeedStopCor);
                     boostSpeedCor = StartCoroutine(BoostSpeedCor());
                 }
-            }
-            else if (tag == "Shield")
-            {
-                if (!hasShield) GameMenuUI.I.ToggleBoost(1, true);
+                break;
+            case "Shield":
+                if (!hasShield) gameMenu.ToggleBoost(1, true);
                 hasShield = true;
-            }
-            else if (tag == "Slowmo")
-            {
+                break;
+            case "Slowmo":
                 if (slowTimeCor != null) return;
                 else
                 {
                     if (slowTimeStopCor != null) StopCoroutine(slowTimeStopCor);
                     slowTimeCor = StartCoroutine(SlowTimeCor());
                 }
-            }
-
-            Destroy(collision.gameObject);
+                break;
+            case "ScoreMultiplier":
+                if (scoreMultiplierCor != null) StopCoroutine(scoreMultiplierCor);
+                else gameMenu.ToggleBoost(3, true);
+                scoreMultiplierCor = StartCoroutine(ScoreMultiplierCor());
+                break;
+            default: break;
         }
+
+        if (collision.gameObject.layer == 8) Destroy(collision.gameObject);
     }
 }

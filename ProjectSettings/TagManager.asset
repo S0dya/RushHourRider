@@ -10,6 +10,8 @@ TagManager:
   - Boost
   - Shield
   - Slowmo
+  - ScoreMultiplier
+  - GameManager
   layers:
   - Default
   - TransparentFX

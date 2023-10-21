@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("Settings")]
     public float speed;
+    public int scoreAmountToAdd;
 
     [Header("SerializeFields")]
     [SerializeField] Rigidbody rb;
