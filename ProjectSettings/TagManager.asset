@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Boost
   - Shield
+  - Slowmo
   layers:
   - Default
   - TransparentFX

@@ -18,6 +18,7 @@ public class Player : SingletonMonobehaviour<Player>
     public float zOfCameraDiviser;
 
     public float boostDuration;
+    public float slowmoDuration;
 
     [Header("SerializeFields")]
     [SerializeField] Transform bikeTransform;
@@ -29,6 +30,7 @@ public class Player : SingletonMonobehaviour<Player>
     Vector3 movementVelocity;
 
     bool isInput;
+    [HideInInspector] public bool isMenuOpened;
     bool hasShield;
 
     float additionalSpeed;
@@ -36,6 +38,8 @@ public class Player : SingletonMonobehaviour<Player>
     Coroutine increaseSpeedCor;
     Coroutine boostSpeedCor;
     Coroutine boostSpeedStopCor;
+    Coroutine slowTimeCor;
+    Coroutine slowTimeStopCor;
 
     protected override void Awake()
     {
@@ -63,6 +67,7 @@ public class Player : SingletonMonobehaviour<Player>
 
     void Update()
     {
+        if (isMenuOpened) return;
         //check input
         if (isInput)
         {
@@ -113,7 +118,6 @@ public class Player : SingletonMonobehaviour<Player>
     {
         while (true)
         {
-            yield return new WaitForSeconds(movementSpeed * 1.2f);
             float newSpeed = movementSpeed + 1;
             while (movementSpeed < newSpeed)
             {
@@ -122,11 +126,17 @@ public class Player : SingletonMonobehaviour<Player>
 
                 yield return null;
             }
+
+            yield return new WaitForSeconds(movementSpeed * 1.2f);
         }
     }
 
+
+    //boosts cors
     IEnumerator BoostSpeedCor()
     {
+        //show icon of boost
+        GameMenuUI.I.ToggleBoost(0, true);
         //increase additional speed smoothly 
         while (additionalSpeed < maxAdditionalSpeed)
         {
@@ -150,12 +160,41 @@ public class Player : SingletonMonobehaviour<Player>
         while (additionalSpeed > 0)
         {
             additionalSpeed = Mathf.Lerp(additionalSpeed, -3, 0.01f);
-            playerCameraTransform.localPosition = new Vector3(0, 0, -additionalSpeed/zOfCameraDiviser);
+            playerCameraTransform.localPosition = new Vector3(0, 0, -additionalSpeed /zOfCameraDiviser);
 
             yield return null;
         }
 
+        GameMenuUI.I.ToggleBoost(0, false);
         boostSpeedStopCor = null;
+    }
+
+    IEnumerator SlowTimeCor()
+    {
+        GameMenuUI.I.ToggleBoost(2, true);
+        while (Settings.currentTimeScale > 0.5f)
+        {
+            //check if menu is opened (time scale would change if i dont use this kind of logic)
+            if (!isMenuOpened) Time.timeScale = Settings.currentTimeScale = Mathf.Lerp(Settings.currentTimeScale, 0.4f, 0.005f);
+
+            yield return null;
+        }
+        yield return new WaitForSeconds(slowmoDuration);
+
+        slowTimeStopCor = StartCoroutine(SlowTimeStopCor());
+        slowTimeCor = null;
+    }
+    IEnumerator SlowTimeStopCor()
+    {
+        while (Settings.currentTimeScale < 1f)
+        {
+            if (!isMenuOpened) Time.timeScale = Settings.currentTimeScale = Mathf.Lerp(Settings.currentTimeScale, 1.1f, 0.05f);
+
+            yield return null;
+        }
+
+        GameMenuUI.I.ToggleBoost(2, false);
+        slowTimeStopCor = null;
     }
 
 
@@ -167,11 +206,14 @@ public class Player : SingletonMonobehaviour<Player>
         {
             if (hasShield)
             {
-                Debug.Log("breakshield");
+                //shield breaks, we just need to remove the icon
+                hasShield = false;
+                GameMenuUI.I.ToggleBoost(1, false);
                 Destroy(collision.gameObject);
             }
             else
             {
+                //GameMenuUI.I.Gameover();
                 Debug.Log("Die");
             }
         }
@@ -193,14 +235,20 @@ public class Player : SingletonMonobehaviour<Player>
             }
             else if (tag == "Shield")
             {
+                if (!hasShield) GameMenuUI.I.ToggleBoost(1, true);
                 hasShield = true;
-                Debug.Log("addShield");
+            }
+            else if (tag == "Slowmo")
+            {
+                if (slowTimeCor != null) return;
+                else
+                {
+                    if (slowTimeStopCor != null) StopCoroutine(slowTimeStopCor);
+                    slowTimeCor = StartCoroutine(SlowTimeCor());
+                }
             }
 
             Destroy(collision.gameObject);
         }
-
     }
-
-    
 }

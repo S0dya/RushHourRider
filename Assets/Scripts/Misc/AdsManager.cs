@@ -68,7 +68,7 @@ public class AdsManager : SingletonMonobehaviour<AdsManager>, IUnityAdsInitializ
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
-        //GameMenu.I.RewardPlayer();
+        GameMenuUI.I.RewardPlayer();
     }
     #endregion
 }
