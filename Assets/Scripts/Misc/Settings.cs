@@ -15,5 +15,10 @@ public static class Settings
     //menu
     public static int money;
 
+    //shop
+    public static int[] itemPrices = { 100, 500 };
+
+    public static int currentColorOfBikeI;
+    public static int currentColorOfBGI;
 
 }
