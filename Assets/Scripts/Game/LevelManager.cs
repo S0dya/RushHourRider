@@ -21,6 +21,8 @@ public class LevelManager : SingletonMonobehaviour<LevelManager>
     [SerializeField] Transform levelsParent;
     [SerializeField] Transform carsParent;
 
+    [SerializeField] GameObject[] bikes;
+
 
     //local
     float curDistance;
@@ -36,8 +38,7 @@ public class LevelManager : SingletonMonobehaviour<LevelManager>
     {
         base.Awake();
 
-        
-        
+        Instantiate(bikes[Settings.currentColorOfBikeI], Vector3.zero, Quaternion.identity);
     }
 
     void Start()

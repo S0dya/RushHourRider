@@ -12,6 +12,7 @@ TagManager:
   - Slowmo
   - ScoreMultiplier
   - GameManager
+  - GameMenu
   layers:
   - Default
   - TransparentFX

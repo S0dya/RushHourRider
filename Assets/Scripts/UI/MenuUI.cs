@@ -16,12 +16,31 @@ public class MenuUI : SingletonMonobehaviour<MenuUI>
     [SerializeField] TextMeshProUGUI moneyText;
     [SerializeField] ShopItemUI[] shopItems;
 
+    [Header("Settings")]
+    [SerializeField] Image musicImage;
+
+    [SerializeField] Image touchInputImage;
+    [SerializeField] Image buttonsInputImage;
+
     protected override void Awake()
     {
         base.Awake();
 
+        SetMoneyText();
+        SetInputType();
+        SetAlphaOfImage(musicImage, Settings.isMusicOn);
+
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         for (int i = 0; i < shopItems.Length; i++) shopItems[i].index = i;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Settings.money += 1500;
+            SetMoneyText();
+        }
     }
 
     //menu
@@ -55,7 +74,52 @@ public class MenuUI : SingletonMonobehaviour<MenuUI>
         ToggleCG(true, menuCG);
     }
 
+
+    //Settings
+    //buttons
+    public void MusicButton()
+    {
+        Settings.isMusicOn = !Settings.isMusicOn;
+        AudioManager.I.ToggleSound();
+        SetAlphaOfImage(musicImage, Settings.isMusicOn);
+    }
+
+    public void TouchInputButton()
+    {
+        if (!Settings.isTouchInput)
+        {
+            Settings.isTouchInput = true;
+            SetInputType();
+        }
+    }
+    public void ButtonsInputButton()
+    {
+        if (Settings.isTouchInput)
+        {
+            Settings.isTouchInput = false;
+            SetInputType();
+        }
+    }
+
+    public void CloseSettingsButton()
+    {
+        ToggleCG(false, settingsCG);
+        ToggleCG(true, menuCG);
+    }
+
+
+
     //other methods
+    public void SetMoneyText() => moneyText.text = Settings.money.ToString();
+    public void SetInputType()
+    {
+        SetAlphaOfImage(touchInputImage, Settings.isTouchInput);
+        SetAlphaOfImage(buttonsInputImage, !Settings.isTouchInput);
+    }
+
+    public void SetAlphaOfImage(Image image, bool isFullAlpha) => image.color = new Color(0, 0, 0, (isFullAlpha ? 1 : 0.5f));
+
+
     void ToggleCG(bool val, CanvasGroup CG)
     {
         if (val) gameManager.Open(CG, 0.5f);

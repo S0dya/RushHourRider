@@ -75,10 +75,7 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     }
 
 
-    public void PlayOneShot(string sound)
-    {
-        EventInstancesDict[sound].start();
-    }
+    public void PlayOneShot(string sound) => EventInstancesDict[sound].start();
 
 
     public EventInstance CreateInstance(EventReference sound)
@@ -99,8 +96,6 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
         return emitter;
     }
 
-    public void ToggleSound(bool val)
-    {
-        RuntimeManager.GetBus("bus:/").setVolume(val ? 1 : 0);
-    }
+    public void ToggleSound() => ToggleSound(Settings.isMusicOn);
+    public void ToggleSound(bool val) => RuntimeManager.GetBus("bus:/").setVolume(val ? 1 : 0);
 }

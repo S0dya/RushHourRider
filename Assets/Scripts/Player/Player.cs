@@ -7,6 +7,7 @@ public class Player : SingletonMonobehaviour<Player>
 {
     Inputs inputs;
     Rigidbody rb;
+    GameMenuUI gameMenu;
 
     [Header("Settings")]
     public float movementSpeed;
@@ -23,25 +24,29 @@ public class Player : SingletonMonobehaviour<Player>
     [Header("SerializeFields")]
     [SerializeField] Transform bikeTransform;
     [SerializeField] Transform playerCameraTransform;
-    [SerializeField] GameMenuUI gameMenu;
 
     //local
     float touchStartPos;
-    float inputDirection;
+    [HideInInspector] public float inputDirection;
     Vector3 movementVelocity;
 
     bool isInput;
+    bool isButtonInput;
     [HideInInspector] public bool isMenuOpened;
     bool hasShield;
 
     float additionalSpeed;
 
     Coroutine increaseSpeedCor;
+    Coroutine buttonInputCor;
+    Coroutine stopButtonInputCor;
     Coroutine boostSpeedCor;
     Coroutine boostSpeedStopCor;
     Coroutine slowTimeCor;
     Coroutine slowTimeStopCor;
     Coroutine scoreMultiplierCor;
+
+    bool touchInput;
 
     protected override void Awake()
     {
@@ -49,20 +54,26 @@ public class Player : SingletonMonobehaviour<Player>
 
         inputs = new Inputs();
         rb = GetComponent<Rigidbody>();
+        gameMenu = GameObject.FindGameObjectWithTag("GameMenu").GetComponent<GameMenuUI>();
+        gameMenu.player = this;
 
+        touchInput = Settings.isTouchInput;
     }
     void OnEnable()
     {
-        inputs.Enable();
+        if (touchInput) inputs.Enable();
     }
     void OnDisable()
     {
-        inputs.Disable();
+        if (touchInput) inputs.Disable();
     }
     void Start()
     {
-        inputs.Touch.Touch.started += context => StartTouch(context);
-        inputs.Touch.Touch.canceled += context => EndTouch(context);
+        if (touchInput)
+        {
+            inputs.Touch.Touch.started += context => StartTouch(context);
+            inputs.Touch.Touch.canceled += context => EndTouch(context);
+        }
 
         increaseSpeedCor = StartCoroutine(IncreaseSpeedCor());
     }
@@ -103,19 +114,66 @@ public class Player : SingletonMonobehaviour<Player>
     
 
     //input
+    //Touch
     void StartTouch(InputAction.CallbackContext context)
     {
         touchStartPos = context.ReadValue<Vector2>().x;
         isInput = true;
     }
-
     void EndTouch(InputAction.CallbackContext context)
     {
         isInput = false;
         touchStartPos = 0;
     }
-    
+
+    //Buttons
+    public void StartButtonInput(int direction)
+    {
+        if (!isButtonInput)
+        {
+            if (stopButtonInputCor != null) StopCoroutine(stopButtonInputCor);
+            buttonInputCor = StartCoroutine(ButtonInputCor(direction));
+
+        }
+
+    }
+
+    public void StopButtonInput(int direction)
+    {
+        stopButtonInputCor = StartCoroutine(StopButtonInputCor(direction));
+     
+        isButtonInput = false;
+    }
+
+
     //Cors
+    IEnumerator ButtonInputCor(int direction)
+    {
+        float curDirection = sensitivity * direction;
+        float endDirection = (sensitivity - 0.3f) * direction;
+        while (inputDirection < curDirection)
+        {
+            inputDirection = Mathf.Lerp(inputDirection, endDirection, 0.005f);
+
+            yield return null;
+        }
+
+        buttonInputCor = null;
+    }
+    IEnumerator StopButtonInputCor(int direction)
+    {
+        bool onLeft = direction == -1;
+        while (inputDirection < curDirection == onLeft)
+        {
+            inputDirection = Mathf.Lerp(inputDirection, endDirection, 0.005f);
+
+            yield return null;
+        }
+
+        stopButtonInputCor = null;
+    }
+
+
     IEnumerator IncreaseSpeedCor()
     {
         while (true)
@@ -124,7 +182,7 @@ public class Player : SingletonMonobehaviour<Player>
             while (movementSpeed < newSpeed)
             {
                 //smoothly increase speed of player
-                movementSpeed = Mathf.Lerp(movementSpeed, newSpeed+0.5f, 0.005f);
+                movementSpeed = Mathf.Lerp(movementSpeed, newSpeed + 0.5f, 0.005f);
 
                 yield return null;
             }

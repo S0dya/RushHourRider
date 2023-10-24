@@ -26,6 +26,7 @@ public class ShopItemUI : MonoBehaviour
         {
             Settings.money -= Settings.itemPrices[index];
             Settings.itemPrices[index] = 0;
+            MenuUI.I.SetMoneyText();
 
             buyObj.SetActive(false);
 

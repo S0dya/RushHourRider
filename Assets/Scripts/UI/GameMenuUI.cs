@@ -7,12 +7,13 @@ using TMPro;
 public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
 {
     GameManager gameManager;
+    public Player player;
 
-    [SerializeField] Player player;
     [SerializeField] CanvasGroup gameMenuCG;
     [SerializeField] CanvasGroup gameoverCG;
     [SerializeField] CanvasGroup countCG;
-
+    [SerializeField] GameObject InputObj;
+    
     [SerializeField] Image musicImage;
     [SerializeField] Image AdsImage;
 
@@ -48,6 +49,7 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
 
     void Start()
     {
+        InputObj.SetActive(!Settings.isTouchInput);
         SetAlphaOfImage(musicImage, Settings.isMusicOn);
         Settings.currentTimeScale = Time.timeScale = 1;
     }
@@ -74,7 +76,7 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
     public void MusicButton()
     {
         Settings.isMusicOn = !Settings.isMusicOn;
-        AudioManager.I.ToggleSound(Settings.isMusicOn);
+        AudioManager.I.ToggleSound();
         SetAlphaOfImage(musicImage, Settings.isMusicOn);
     }
     //gameover buttons
@@ -157,6 +159,6 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
         }
     }
 
-    void SetScoreText(TextMeshProUGUI text) => text.text = score.ToString();
     void SetAlphaOfImage(Image image, bool isFullAlpha) => image.color = new Color(0, 0, 0, (isFullAlpha ? 1 : 0.5f));
+    void SetScoreText(TextMeshProUGUI text) => text.text = score.ToString();
 }

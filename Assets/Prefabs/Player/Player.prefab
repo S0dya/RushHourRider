@@ -525,7 +525,6 @@ MonoBehaviour:
   slowmoDuration: 4
   bikeTransform: {fileID: 3703611695304887441}
   playerCameraTransform: {fileID: 3703611695535843711}
-  gameMenu: {fileID: 0}
   isMenuOpened: 0
 --- !u!54 &3703611695317019335
 Rigidbody:
