@@ -6,14 +6,10 @@ using UnityEngine.InputSystem;
 public class Player : SingletonMonobehaviour<Player>
 {
     Inputs inputs;
-    Rigidbody rb;
-    GameMenuUI gameMenu;
 
     [Header("Settings")]
     public float movementSpeed;
     public float sensitivity;
-
-    public float bikeMaxRotation;
 
     public float maxAdditionalSpeed;
     public float zOfCameraDiviser;
@@ -22,6 +18,9 @@ public class Player : SingletonMonobehaviour<Player>
     public float slowmoDuration;
 
     [Header("SerializeFields")]
+    [SerializeField] Rigidbody rb;
+    [SerializeField] MeshRenderer bikeRenderer;
+    [SerializeField] GameMenuUI gameMenu;
     [SerializeField] Transform bikeTransform;
     [SerializeField] Transform playerCameraTransform;
 
@@ -53,11 +52,11 @@ public class Player : SingletonMonobehaviour<Player>
         base.Awake();
 
         inputs = new Inputs();
-        rb = GetComponent<Rigidbody>();
-        gameMenu = GameObject.FindGameObjectWithTag("GameMenu").GetComponent<GameMenuUI>();
-        gameMenu.player = this;
-
         touchInput = Settings.isTouchInput;
+
+        Material[] materials = bikeRenderer.materials;
+        materials[0] = GameManager.I.bikeMaterials[Settings.currentColorOfBikeI];
+        bikeRenderer.materials = materials;
     }
     void OnEnable()
     {
@@ -92,21 +91,19 @@ public class Player : SingletonMonobehaviour<Player>
                 float deltaX = delta.normalized.x;
                 inputDirection = deltaX * sensitivity;
 
-                //rotate bike for input visualisation
-                bikeTransform.localRotation = Quaternion.Euler(0, bikeMaxRotation * deltaX, 0);
             }
             else if (Input.GetMouseButton(0))
             {
                 Vector2 delta = (Vector2)Input.mousePosition - new Vector2(touchStartPos, 0);
                 float deltaX = delta.normalized.x;
                 inputDirection = deltaX * sensitivity;
-
-                bikeTransform.localRotation = Quaternion.Euler(0, bikeMaxRotation * deltaX, 0);
             }
         }
 
         //add force to rigidbody of player to move
         movementVelocity = transform.forward * (movementSpeed + additionalSpeed);
+        //rotate bike for input visualisation
+        bikeTransform.localRotation = Quaternion.Euler(0, inputDirection, 0);
         movementVelocity.x += inputDirection;
         rb.velocity = movementVelocity;
     }
@@ -114,7 +111,6 @@ public class Player : SingletonMonobehaviour<Player>
     
 
     //input
-    //Touch
     void StartTouch(InputAction.CallbackContext context)
     {
         touchStartPos = context.ReadValue<Vector2>().x;
@@ -126,20 +122,20 @@ public class Player : SingletonMonobehaviour<Player>
         touchStartPos = 0;
     }
 
-    //Buttons
     public void StartButtonInput(int direction)
     {
         if (!isButtonInput)
         {
+            isButtonInput = true;
             if (stopButtonInputCor != null) StopCoroutine(stopButtonInputCor);
             buttonInputCor = StartCoroutine(ButtonInputCor(direction));
 
         }
 
     }
-
     public void StopButtonInput(int direction)
     {
+        if (buttonInputCor != null) StopCoroutine(buttonInputCor);
         stopButtonInputCor = StartCoroutine(StopButtonInputCor(direction));
      
         isButtonInput = false;
@@ -149,11 +145,12 @@ public class Player : SingletonMonobehaviour<Player>
     //Cors
     IEnumerator ButtonInputCor(int direction)
     {
+        bool onLeft = direction == -1;
         float curDirection = sensitivity * direction;
         float endDirection = (sensitivity - 0.3f) * direction;
-        while (inputDirection < curDirection)
+        while (inputDirection > curDirection == onLeft)
         {
-            inputDirection = Mathf.Lerp(inputDirection, endDirection, 0.005f);
+            inputDirection = Mathf.Lerp(inputDirection, endDirection, 0.05f);
 
             yield return null;
         }
@@ -163,9 +160,10 @@ public class Player : SingletonMonobehaviour<Player>
     IEnumerator StopButtonInputCor(int direction)
     {
         bool onLeft = direction == -1;
-        while (inputDirection < curDirection == onLeft)
+        float endDirection = 0.3f * direction;
+        while (inputDirection < 0 == onLeft)
         {
-            inputDirection = Mathf.Lerp(inputDirection, endDirection, 0.005f);
+            inputDirection = Mathf.Lerp(inputDirection, endDirection, 0.1f);
 
             yield return null;
         }
@@ -187,6 +185,7 @@ public class Player : SingletonMonobehaviour<Player>
                 yield return null;
             }
 
+            gameMenu.SetSpeedText((int)(movementSpeed + additionalSpeed));
             yield return new WaitForSeconds(movementSpeed * 0.15f);
         }
     }

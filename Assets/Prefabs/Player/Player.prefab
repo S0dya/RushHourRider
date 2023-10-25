@@ -516,15 +516,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49b23af6ff88fb489bc252588f1f97c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 1
-  sensitivity: 5
-  bikeMaxRotation: 10
+  movementSpeed: 5
+  sensitivity: 10
   maxAdditionalSpeed: 10
   zOfCameraDiviser: 50
   boostDuration: 10
   slowmoDuration: 4
+  rb: {fileID: 3703611695317019335}
+  bikeRenderer: {fileID: 3703611694245708149}
+  gameMenu: {fileID: 0}
   bikeTransform: {fileID: 3703611695304887441}
   playerCameraTransform: {fileID: 3703611695535843711}
+  inputDirection: 0
   isMenuOpened: 0
 --- !u!54 &3703611695317019335
 Rigidbody:

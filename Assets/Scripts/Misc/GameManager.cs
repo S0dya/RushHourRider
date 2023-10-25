@@ -6,6 +6,9 @@ using UnityEngine.UI;
 [DefaultExecutionOrder(-1)]
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
+    public Material[] bikeMaterials;
+    [SerializeField] Material[] skyBoxes;
+
     protected override void Awake()
     {
         base.Awake();
@@ -42,6 +45,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         LeanTween.alphaCanvas(CG, 0f, durationEnd).setEase(LeanTweenType.easeInOutQuad);
         Destroy(gO);
+    }
+
+    //lightning
+    public void SetSkyBox()
+    {
+        RenderSettings.skybox = skyBoxes[Settings.currentColorOfBGI];
     }
 
     //save/load

@@ -7,8 +7,8 @@ using TMPro;
 public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
 {
     GameManager gameManager;
-    public Player player;
 
+    [SerializeField] Player player;
     [SerializeField] CanvasGroup gameMenuCG;
     [SerializeField] CanvasGroup gameoverCG;
     [SerializeField] CanvasGroup countCG;
@@ -19,6 +19,7 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
 
     [SerializeField] TextMeshProUGUI gameoverScoreText;
     [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI speedText;
 
     [SerializeField] RectTransform scoreAddParent;
     [SerializeField] GameObject scoreAddPrefab;
@@ -159,6 +160,7 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
         }
     }
 
+    public void SetSpeedText(int speed) => speedText.text = speed.ToString();
     void SetAlphaOfImage(Image image, bool isFullAlpha) => image.color = new Color(0, 0, 0, (isFullAlpha ? 1 : 0.5f));
     void SetScoreText(TextMeshProUGUI text) => text.text = score.ToString();
 }

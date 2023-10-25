@@ -45,11 +45,11 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     void Start()
     {
         ToggleSound(Settings.isMusicOn);
-        /*
 
         EventInstancesDict.Add("MusicMenu", CreateInstance(MusicMenu));
         EventInstancesDict.Add("MusicGame", CreateInstance(MusicGame));
         EventInstancesDict.Add("Ambience", CreateInstance(Ambience));
+        /*
 
         EventInstancesDict.Add("PlayerStepSound", CreateInstance(PlayerStepSound));
         EventInstancesDict.Add("ShootSound", CreateInstance(ShootSound));

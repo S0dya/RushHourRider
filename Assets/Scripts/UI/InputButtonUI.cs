@@ -13,13 +13,13 @@ public class InputButtonUI : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
-    public void StartButtonInput(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        player.ButtonInputStart(direction);
+        player.StartButtonInput(direction);
     }
 
-    public void StopButtonInput(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
-        player.ButtonInputEnd(direction);
+        player.StopButtonInput(direction);
     }
 }

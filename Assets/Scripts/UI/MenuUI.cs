@@ -16,6 +16,8 @@ public class MenuUI : SingletonMonobehaviour<MenuUI>
     [SerializeField] TextMeshProUGUI moneyText;
     [SerializeField] ShopItemUI[] shopItems;
 
+    [SerializeField] MeshRenderer bikeRenderer;
+
     [Header("Settings")]
     [SerializeField] Image musicImage;
 
@@ -31,7 +33,9 @@ public class MenuUI : SingletonMonobehaviour<MenuUI>
         SetAlphaOfImage(musicImage, Settings.isMusicOn);
 
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        for (int i = 0; i < shopItems.Length; i++) shopItems[i].index = i;
+        
+        gameManager.SetSkyBox();
+        SetBikeMaterial();
     }
 
     void Update()
@@ -47,7 +51,7 @@ public class MenuUI : SingletonMonobehaviour<MenuUI>
     //buttons
     public void PlayButton()
     {
-        LoadingSceneManager.I.StartGame();
+        LoadingSceneManager.I.LoadGame();
     }
     public void ShopButton()
     {
@@ -74,6 +78,13 @@ public class MenuUI : SingletonMonobehaviour<MenuUI>
         ToggleCG(true, menuCG);
     }
 
+    //methods
+    public void SetBikeMaterial()
+    {
+        Material[] materials = bikeRenderer.materials;
+        materials[0] = gameManager.bikeMaterials[Settings.currentColorOfBikeI];
+        bikeRenderer.materials = materials;
+    }
 
     //Settings
     //buttons

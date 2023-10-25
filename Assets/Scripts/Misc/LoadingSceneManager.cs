@@ -55,7 +55,6 @@ public class LoadingSceneManager : SingletonMonobehaviour<LoadingSceneManager>
         while (!operation.isDone)
         {
             float progression = Mathf.Clamp01(operation.progress / 0.9f);
-
             SetFillAmount(progression);
 
             yield return null;

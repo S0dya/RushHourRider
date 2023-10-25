@@ -17,7 +17,9 @@ public class ShopItemUI : MonoBehaviour
 
     void Start()
     {
-        priceText.text = Settings.itemPrices[index].ToString();
+        int price = Settings.itemPrices[index];
+        if (price == 0) buyObj.SetActive(false);
+        else priceText.text = price.ToString();
     }
 
     public void BuyItemButton()
@@ -40,9 +42,11 @@ public class ShopItemUI : MonoBehaviour
         {
             case 0:
                 Settings.currentColorOfBikeI = colorOfBikeI;
+                MenuUI.I.SetBikeMaterial();
                 break;
             case 1:
                 Settings.currentColorOfBGI = colorOfBGI;
+                GameManager.I.SetSkyBox();
                 break;
             default: break;
         }
