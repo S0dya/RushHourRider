@@ -4,9 +4,6 @@ using UnityEngine;
 
 public static class Settings 
 {
-
-
-
     //game
     public static float currentTimeScale;
 
@@ -20,7 +17,7 @@ public static class Settings
     public static int currentColorOfBGI;
 
     //settings
-    public static bool isTouchInput = false;
+    public static bool firstTime;
     public static bool isMusicOn;
-
+    public static bool isTouchInput = true;
 }

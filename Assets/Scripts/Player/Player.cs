@@ -92,12 +92,14 @@ public class Player : SingletonMonobehaviour<Player>
                 inputDirection = deltaX * sensitivity;
 
             }
+            /* mouse input
             else if (Input.GetMouseButton(0))
             {
                 Vector2 delta = (Vector2)Input.mousePosition - new Vector2(touchStartPos, 0);
                 float deltaX = delta.normalized.x;
                 inputDirection = deltaX * sensitivity;
             }
+            */
         }
 
         //add force to rigidbody of player to move
@@ -273,6 +275,7 @@ public class Player : SingletonMonobehaviour<Player>
         {
             case "Obstacle":
             case "Enemy":
+                AudioManager.I.PlayOneShot("Crash");
                 if (hasShield)
                 {
                     //shield breaks, we just need to remove the icon
@@ -282,11 +285,11 @@ public class Player : SingletonMonobehaviour<Player>
                 }
                 else
                 {
-                    //gameMenu.Gameover();
-                    Debug.Log("Die");
+                    gameMenu.Gameover();
                 }
                 break;
             case "Boost":
+                AudioManager.I.PlayOneShot("BoostPickUp");
                 //add additional speed as a response for taking a boost if boost is already being used
                 if (boostSpeedCor != null)
                 {

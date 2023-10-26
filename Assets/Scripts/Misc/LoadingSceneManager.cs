@@ -19,14 +19,13 @@ public class LoadingSceneManager : SingletonMonobehaviour<LoadingSceneManager>
     public void StartGame()
     {
         AudioManager.I.EventInstancesDict["MusicMenu"].start();
-        AudioManager.I.EventInstancesDict["Ambience"].start();
         StartCoroutine(LoadSceneCor(-1, 1));
     }
 
     public void LoadMenu()
     {
         AudioManager.I.EventInstancesDict["MusicGame"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        AudioManager.I.EventInstancesDict["Ambience"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        AudioManager.I.EventInstancesDict["MusicGameMenu"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         AudioManager.I.EventInstancesDict["MusicMenu"].start();
         StartCoroutine(LoadSceneCor(2, 1));
     }
@@ -34,8 +33,8 @@ public class LoadingSceneManager : SingletonMonobehaviour<LoadingSceneManager>
     public void LoadGame()
     {
         AudioManager.I.EventInstancesDict["MusicMenu"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        AudioManager.I.EventInstancesDict["Ambience"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         AudioManager.I.EventInstancesDict["MusicGame"].start();
+        AudioManager.I.EventInstancesDict["MusicGameMenu"].start();
         StartCoroutine(LoadSceneCor(1, 2));
     }
 

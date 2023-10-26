@@ -755,8 +755,9 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: efa1d2fd4006b9a489b9521195ce948d, type: 2}
+  m_sharedMaterial: {fileID: 7821296591945410284, guid: efa1d2fd4006b9a489b9521195ce948d,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1174,25 +1175,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MusicMenu>k__BackingField:
     Guid:
-      Data1: 860864577
-      Data2: 1219213604
-      Data3: 1803634574
-      Data4: -851568304
-    Path: event:/Music/CalmMusic
+      Data1: 1993097898
+      Data2: 1084570480
+      Data3: -1479192668
+      Data4: -1262957881
+    Path: event:/Music/Menu
   <MusicGame>k__BackingField:
     Guid:
-      Data1: 79992516
-      Data2: 1262429184
-      Data3: -1079997269
-      Data4: -594325686
-    Path: event:/Ambience/TestAmbience
-  <Ambience>k__BackingField:
+      Data1: -776926986
+      Data2: 1162287191
+      Data3: -1049090130
+      Data4: -31888109
+    Path: event:/Music/Game
+  <MusicGameMenu>k__BackingField:
     Guid:
-      Data1: 79992516
-      Data2: 1262429184
-      Data3: -1079997269
-      Data4: -594325686
-    Path: event:/Ambience/TestAmbience
+      Data1: -1634239678
+      Data2: 1273382715
+      Data3: -1990952549
+      Data4: 862053139
+    Path: event:/Music/GameMenu
+  <ButtonUI>k__BackingField:
+    Guid:
+      Data1: 86995254
+      Data2: 1133528328
+      Data3: -289419889
+      Data4: 699846521
+    Path: event:/SFX/ButtonUI
+  <BoostPickUp>k__BackingField:
+    Guid:
+      Data1: 1282809988
+      Data2: 1171062878
+      Data3: -1164044377
+      Data4: -2118798177
+    Path: event:/SFX/BoostPick
+  <Crash>k__BackingField:
+    Guid:
+      Data1: 601230681
+      Data2: 1257321898
+      Data3: 144147130
+      Data4: 1161843093
+    Path: event:/SFX/Crash
 --- !u!1 &2144400351
 GameObject:
   m_ObjectHideFlags: 0

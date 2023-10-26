@@ -19,19 +19,12 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     [field: Header("Music")]
     [field: SerializeField] public EventReference MusicMenu { get; private set; }
     [field: SerializeField] public EventReference MusicGame { get; private set; }
-    [field: SerializeField] public EventReference Ambience { get; private set; }
+    [field: SerializeField] public EventReference MusicGameMenu { get; private set; }
 
-    /*
-    [field: Header("Enverenment")]
-    [field: SerializeField] public EventReference RoomCleared { get; private set; }
-
-    [field: Header("Player")]
-    [field: SerializeField] public EventReference PlayerStepSound { get; private set; }
-    [field: SerializeField] public EventReference ShootSound { get; private set; }
-
-    [field: Header("UI")]
-    [field: SerializeField] public EventReference ButtonPress { get; private set; }
-    */
+    [field: Header("SFX")]
+    [field: SerializeField] public EventReference ButtonUI { get; private set; }
+    [field: SerializeField] public EventReference BoostPickUp { get; private set; }
+    [field: SerializeField] public EventReference Crash { get; private set; }
 
     protected override void Awake()
     {
@@ -48,15 +41,11 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
 
         EventInstancesDict.Add("MusicMenu", CreateInstance(MusicMenu));
         EventInstancesDict.Add("MusicGame", CreateInstance(MusicGame));
-        EventInstancesDict.Add("Ambience", CreateInstance(Ambience));
-        /*
+        EventInstancesDict.Add("MusicGameMenu", CreateInstance(MusicGameMenu));
 
-        EventInstancesDict.Add("PlayerStepSound", CreateInstance(PlayerStepSound));
-        EventInstancesDict.Add("ShootSound", CreateInstance(ShootSound));
-
-        EventInstancesDict.Add("RoomCleared", CreateInstance(RoomCleared));
-        EventInstancesDict.Add("ButtonPress", CreateInstance(ButtonPress));
-        */
+        EventInstancesDict.Add("ButtonUI", CreateInstance(ButtonUI));
+        EventInstancesDict.Add("BoostPickUp", CreateInstance(BoostPickUp));
+        EventInstancesDict.Add("Crash", CreateInstance(Crash));
     }
 
     public void SetParameter(string instanceName, string parameterName, float value)
@@ -98,4 +87,5 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
 
     public void ToggleSound() => ToggleSound(Settings.isMusicOn);
     public void ToggleSound(bool val) => RuntimeManager.GetBus("bus:/").setVolume(val ? 1 : 0);
+    public void ToggleGameMusic(bool val) => RuntimeManager.GetBus("bus:/MusicGame").setVolume(val ? 1 : 0);
 }

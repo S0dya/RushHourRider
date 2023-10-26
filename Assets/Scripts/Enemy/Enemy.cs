@@ -11,15 +11,8 @@ public class Enemy : MonoBehaviour
     [Header("SerializeFields")]
     [SerializeField] Rigidbody rb;
 
-
     //local
     Vector3 movementVelocity;
-
-
-    void Start()
-    {
-
-    }
 
     void Update()
     {

@@ -60,6 +60,7 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
     {
         player.isMenuOpened = true;
         Time.timeScale = 0f;
+        AudioManager.I.ToggleGameMusic(false);
         ToggleGameMenu(true);
     }
     public void ResumeButton()
@@ -109,18 +110,20 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
     {
         if (val) gameManager.Open(gameMenuCG, 0.1f);
         else gameManager.Close(gameMenuCG, 0.5f);
-
-        //StartCoroutine();
     }
 
     public void Gameover()
     {
+        CountScore();
         SetScoreText(gameoverScoreText);
         gameManager.Open(gameoverCG, 0);
+        AudioManager.I.ToggleGameMusic(false);
+        Time.timeScale = 0;
     }
 
     public void RewardPlayer()
     {
+        CountScore();
         score *= 2;
         SetScoreText(gameoverScoreText);
         SetAlphaOfImage(AdsImage, false);
@@ -129,7 +132,7 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
 
     void CountScore()
     {
-        Settings.money = score/5;
+        Settings.money += score/2;
     }
 
     public void ToggleBoost(int i, bool val)
@@ -157,10 +160,12 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
             Time.timeScale = Settings.currentTimeScale;
             player.isMenuOpened = false;
             gameManager.Close(countCG, 0f);
+            AudioManager.I.ToggleGameMusic(true);
         }
     }
 
     public void SetSpeedText(int speed) => speedText.text = speed.ToString();
     void SetAlphaOfImage(Image image, bool isFullAlpha) => image.color = new Color(0, 0, 0, (isFullAlpha ? 1 : 0.5f));
     void SetScoreText(TextMeshProUGUI text) => text.text = score.ToString();
+    public void PlayButtonSound() => AudioManager.I.PlayOneShot("ButtonUI");
 }

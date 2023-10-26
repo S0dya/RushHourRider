@@ -130,6 +130,7 @@ public class MenuUI : SingletonMonobehaviour<MenuUI>
 
     public void SetAlphaOfImage(Image image, bool isFullAlpha) => image.color = new Color(0, 0, 0, (isFullAlpha ? 1 : 0.5f));
 
+    public void PlayButtonSound() => AudioManager.I.PlayOneShot("ButtonUI");
 
     void ToggleCG(bool val, CanvasGroup CG)
     {

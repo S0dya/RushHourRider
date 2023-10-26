@@ -14,7 +14,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         base.Awake();
 
         LoadData();
-        //Settings.firstTime = false;
+        Settings.firstTime = false;
     }
 
     //UI
@@ -77,26 +77,32 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public void SaveData()
     {
-        /*
-        for (int i = 0; i < Settings.soundVolume.Length; i++)
+        PlayerPrefs.SetInt("money", Settings.money);
+        PlayerPrefs.SetInt("currentColorOfBikeI", Settings.currentColorOfBikeI);
+        PlayerPrefs.SetInt("currentColorOfBGI", Settings.currentColorOfBGI);
+        for (int i = 0; i < Settings.itemPrices.Length; i++)
         {
-            PlayerPrefs.SetFloat($"Volume {i}", Settings.soundVolume[i]);
+            PlayerPrefs.SetInt($"itemPrice {i}", Settings.itemPrices[i]);
         }
 
         PlayerPrefs.SetInt("firstTime", Settings.firstTime ? 0 : 1);
-        */
+        PlayerPrefs.SetInt("isMusicOn", Settings.isMusicOn ? 0 : 1);
+        PlayerPrefs.SetInt("isTouchInput", Settings.isTouchInput ? 0 : 1);
     }
 
     public void LoadData() 
     {
-        /*
-        Settings.firstTime = (PlayerPrefs.GetInt("firstTime") == 0);
-        if (Settings.firstTime) return;
+        if (PlayerPrefs.GetInt("firstTime") == 0) return;
 
-        for (int i = 0; i < Settings.soundVolume.Length; i++)
+        Settings.money = PlayerPrefs.GetInt("money");
+        Settings.currentColorOfBikeI = PlayerPrefs.GetInt("currentColorOfBikeI");
+        Settings.currentColorOfBGI = PlayerPrefs.GetInt("currentColorOfBGI");
+        for (int i = 0; i < Settings.itemPrices.Length; i++)
         {
-            Settings.soundVolume[i] = PlayerPrefs.GetFloat($"Volume {i}");
+            Settings.itemPrices[i] = PlayerPrefs.GetInt($"itemPrice {i}");
         }
-        */
+
+        Settings.isMusicOn = (PlayerPrefs.GetInt("isMusicOn") == 0);
+        Settings.isTouchInput = (PlayerPrefs.GetInt("isTouchInput") == 0);
     }
 }
