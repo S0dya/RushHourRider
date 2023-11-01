@@ -83,15 +83,14 @@ public class Player : SingletonMonobehaviour<Player>
         //check input
         if (isInput)
         {
-            if (Input.touchCount > 0)
-            {
-                //delta is needed for correct work of direction of input
-                Vector2 delta = (Vector2)Input.mousePosition - new Vector2(touchStartPos, 0);
-                //we only need x since we are moving player on left or right
-                float deltaX = delta.normalized.x;
-                inputDirection = deltaX * sensitivity;
+            //if (Input.touchCount > 0) {}
+            
+            //delta is needed for correct work of direction of input
+            Vector2 delta = (Vector2)Input.mousePosition - new Vector2(touchStartPos, 0);
+            //we only need x since we are moving player on left or right
+            float deltaX = delta.normalized.x;
+            inputDirection = deltaX * sensitivity;
 
-            }
             /* mouse input
             else if (Input.GetMouseButton(0))
             {
