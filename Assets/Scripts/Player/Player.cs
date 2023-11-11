@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player : SingletonMonobehaviour<Player>
 {
-    Inputs inputs;
-
     [Header("Settings")]
     public float movementSpeed;
     public float sensitivity;
@@ -18,6 +15,7 @@ public class Player : SingletonMonobehaviour<Player>
     public float slowmoDuration;
 
     [Header("SerializeFields")]
+    [SerializeField] Camera cam;
     [SerializeField] Rigidbody rb;
     [SerializeField] MeshRenderer bikeRenderer;
     [SerializeField] GameMenuUI gameMenu;
@@ -25,6 +23,7 @@ public class Player : SingletonMonobehaviour<Player>
     [SerializeField] Transform playerCameraTransform;
 
     //local
+    int touchesCount;
     float touchStartPos;
     [HideInInspector] public float inputDirection;
     Vector3 movementVelocity;
@@ -36,6 +35,8 @@ public class Player : SingletonMonobehaviour<Player>
 
     float additionalSpeed;
 
+    Coroutine startInputCor;
+
     Coroutine increaseSpeedCor;
     Coroutine buttonInputCor;
     Coroutine stopButtonInputCor;
@@ -46,59 +47,36 @@ public class Player : SingletonMonobehaviour<Player>
     Coroutine scoreMultiplierCor;
 
     bool touchInput;
+    bool isInputChecked;
 
     protected override void Awake()
     {
         base.Awake();
 
-        inputs = new Inputs();
         touchInput = Settings.isTouchInput;
 
         Material[] materials = bikeRenderer.materials;
         materials[0] = GameManager.I.bikeMaterials[Settings.currentColorOfBikeI];
         bikeRenderer.materials = materials;
     }
-    void OnEnable()
-    {
-        if (touchInput) inputs.Enable();
-    }
-    void OnDisable()
-    {
-        if (touchInput) inputs.Disable();
-    }
     void Start()
     {
-        if (touchInput)
-        {
-            inputs.Touch.Touch.started += context => StartTouch(context);
-            inputs.Touch.Touch.canceled += context => EndTouch(context);
-        }
-
         increaseSpeedCor = StartCoroutine(IncreaseSpeedCor());
     }
 
     void Update()
     {
         if (isMenuOpened) return;
+
         //check input
+        if (touchInput) TouchInput();
         if (isInput)
         {
-            //if (Input.touchCount > 0) {}
-            
             //delta is needed for correct work of direction of input
-            Vector2 delta = (Vector2)Input.mousePosition - new Vector2(touchStartPos, 0);
+            Vector2 delta = (Vector2)Input.GetTouch(0).position - new Vector2(touchStartPos, 0);
             //we only need x since we are moving player on left or right
             float deltaX = delta.normalized.x;
             inputDirection = deltaX * sensitivity;
-
-            /* mouse input
-            else if (Input.GetMouseButton(0))
-            {
-                Vector2 delta = (Vector2)Input.mousePosition - new Vector2(touchStartPos, 0);
-                float deltaX = delta.normalized.x;
-                inputDirection = deltaX * sensitivity;
-            }
-            */
         }
 
         //add force to rigidbody of player to move
@@ -109,20 +87,40 @@ public class Player : SingletonMonobehaviour<Player>
         rb.velocity = movementVelocity;
     }
 
-    
+    void TouchInput()
+    {
+        touchesCount = Input.touchCount;
+
+        if (!isInputChecked && touchesCount == 1 && startInputCor == null)
+        {
+            startInputCor = StartCoroutine(StartInputCor());
+        }
+
+        if (isInput)
+        {
+            if (touchesCount == 0 || touchesCount > 1)
+            {
+                isInputChecked = false;
+                isInput = false;
+                touchStartPos = 0;
+            }
+        }
+    }
+    IEnumerator StartInputCor()
+    {
+        yield return null;
+
+        isInputChecked = true;
+        if (touchesCount == 1)
+        {
+            touchStartPos = Input.GetTouch(0).position.x;
+            isInput = true;
+        }
+
+        startInputCor = null;
+    }
 
     //input
-    void StartTouch(InputAction.CallbackContext context)
-    {
-        touchStartPos = context.ReadValue<Vector2>().x;
-        isInput = true;
-    }
-    void EndTouch(InputAction.CallbackContext context)
-    {
-        isInput = false;
-        touchStartPos = 0;
-    }
-
     public void StartButtonInput(int direction)
     {
         if (!isButtonInput)
@@ -141,7 +139,6 @@ public class Player : SingletonMonobehaviour<Player>
      
         isButtonInput = false;
     }
-
 
     //Cors
     IEnumerator ButtonInputCor(int direction)
@@ -187,7 +184,7 @@ public class Player : SingletonMonobehaviour<Player>
             }
 
             gameMenu.SetSpeedText((int)(movementSpeed + additionalSpeed));
-            yield return new WaitForSeconds(movementSpeed * 0.15f);
+            yield return new WaitForSeconds(movementSpeed * 0.025f);
         }
     }
 

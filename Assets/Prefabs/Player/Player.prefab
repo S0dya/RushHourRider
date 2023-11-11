@@ -522,6 +522,7 @@ MonoBehaviour:
   zOfCameraDiviser: 50
   boostDuration: 10
   slowmoDuration: 4
+  cam: {fileID: 3703611695535843704}
   rb: {fileID: 3703611695317019335}
   bikeRenderer: {fileID: 3703611694245708149}
   gameMenu: {fileID: 0}
