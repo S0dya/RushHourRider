@@ -40,11 +40,7 @@ public class MenuUI : SingletonMonobehaviour<MenuUI>
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Settings.money += 1500;
-            SetMoneyText();
-        }
+        if (Input.GetKeyDown(KeyCode.Escape)) ExitButton();
     }
 
     //menu

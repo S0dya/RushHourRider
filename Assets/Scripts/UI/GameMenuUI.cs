@@ -37,6 +37,8 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
     //local 
     int curCount;
 
+    bool isGame;
+
 
     protected override void Awake()
     {
@@ -53,6 +55,21 @@ public class GameMenuUI : SingletonMonobehaviour<GameMenuUI>
         InputObj.SetActive(!Settings.isTouchInput);
         SetAlphaOfImage(musicImage, Settings.isMusicOn);
         Settings.currentTimeScale = Time.timeScale = 1;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (player.isMenuOpened)
+            {
+                ResumeButton();
+            }
+            else if (!player.isMenuOpened)
+            {
+                PauseButton();
+            }
+        }
     }
 
     //buttons
